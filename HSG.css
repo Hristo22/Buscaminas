@@ -1,0 +1,48 @@
+.colorCeldas {
+    background-color: blue;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.miDiv {
+    margin-left: 37.5%;
+}
+
+/*
+table tr td:hover {
+    background: color #018abb;
+}
+*/
+
+
+
+
+/* ------------------------------------------------------ */
+/*
+nav {
+    margin:auto;
+    height: 100px;
+    background-color:#97CADB;
+    text-align:center;
+    width: 1080px;
+    border-radius:20px;
+}
+
+nav ul {
+    margin:auto;
+    height:100%;
+}
+
+nav ul li {
+    list-style-type: none;
+    display: inline-block;
+    font-size: 30px;
+    padding: 30px 40px 0px 40px;
+    height: 70px;
+    border-radius: 20px;
+}
+
+nav ul li:hover {
+    background: color #018abb;
+}
+*/

@@ -11,14 +11,15 @@
         ¿Cuantas bombas tendra este tablero?<input id="numBombas" type="number"><br>
         ¿Cual sera el nivel del juego?<select id="dificultad">
             <option value="Facil">Facil</option>
-            <option value="Normal" selected>Normal</option>
+            <option value="Normal">Normal</option>
             <option value="Dificil">Dificil</option>
-            <option value="miEleccion">Mi eleccion</option>
+            <option value="miEleccion" selected>Mi eleccion</option>
         </select><br>
-        <button onclick="generarTableroJS()">Comenzar</button>
+        <button id="boton" onclick="generarTableroJS()">Comenzar</button>
 
         <br><br>
 
         <div id="miDiv" align="center"></div>
+        <p id="numBanderas"></p>
     </body>
 </html>

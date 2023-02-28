@@ -12,42 +12,33 @@ function generarTableroJS() {
     miTabla=document.createElement("table");
     dificultad=document.getElementById("dificultad").value;
 
+    if(document.getElementById("boton").click==true) {
+        location.reload();
+    }
+
     if(dificultad=="Facil") {
-        setTimeout(function() {
-            tamano=3;
-            numBombas=2;
-            dibujarTableroHTML(tamano);
-        },1000);
+        tamano=3;
+        numBombas=2;
+    }
+    else if(dificultad=="Normal") {
+        tamano=8;
+        numBombas=6;
+    }
+    else if(dificultad=="Dificil") {
+        tamano=15;
+        numBombas=12;
+    }
+    else {
+        tamano=document.getElementById("tamañoTablero").value;
+        numBombas=document.getElementById("numBombas").value;
     }
 
-    if(dificultad=="Normal") {
-        setTimeout(function() {
-            tamano=8;
-            numBombas=6;
-            dibujarTableroHTML(tamano);
-        },1000);
-    }
+    dibujarTableroHTML(tamano);
 
-    if(dificultad=="Dificil") {
-        setTimeout(function() {
-            tamano=15;
-            numBombas=12;
-            dibujarTableroHTML(tamano);
-        },1000);
-    }
-
-    if(dificultad=="miEleccion") {
-        setTimeout(function() {
-            tamano=document.getElementById("tamañoTablero").value;
-            numBombas=document.getElementById("numBombas").value;
-            dibujarTableroHTML(tamano);
-        },1000);
-    }
+    colocarBombasTableroJS(numBombas);
 
     let contenido=document.getElementById("miDiv");
     contenido.appendChild(miTabla);
-
-    colocarBombasTableroJS(numBombas);
 };
 
 function dibujarTableroHTML(tamano) {
@@ -65,8 +56,8 @@ function crearCasillero(filas, i, j) {
     casilla.setAttribute("id",`idCelda_${i}_${j}`);
     casilla.setAttribute("class","colorCeldas");
     //casilla.setAttribute("id",10*i+j);
-    casilla.setAttribute("onclick", "clickar(id)");
-    casilla.setAttribute("value", " ");
+    casilla.setAttribute("onclick","clickar(id)");
+    casilla.setAttribute("value"," ");
     filas.appendChild(casilla);
 };
 
@@ -81,16 +72,28 @@ function colocarBombasTableroJS(numBombas) {
     //numBombas=document.getElementById("numBombas").value;
 
     for(let a=0; a<numBombas; a++) {
-        if(document.getElementById(`idCelda_${i}_${j}`).value==" ") {
+        if(document.getElementById(`idCelda_${i}_${j}`)==" ") {
             document.getElementById(`idCelda_${i}_${j}`).value=bomba;
         }
     };
 };
 
 function clickar(id) {
-    if(id.value==bomba) {
+    if(document.getElementById(id).value==bomba) {
         alert("Has tocado una bomba 💣");
     } else {
         alert(id);
     }
 };
+
+function banderas(id){ 
+    if(document.getElementById(id).outerText=="🚩"){
+        document.getElementById(id).innerText="";
+        numBombas++;
+        document.getElementById("numBanderas").innerText="Banderas restantes: "+numBombas;
+    }else if(numBombas>0){
+        document.getElementById(id).innerText="🚩";
+        numBombas--;
+        document.getElementById("numBanderas").innerText="Banderas restantes: "+numBombas;
+    }
+}

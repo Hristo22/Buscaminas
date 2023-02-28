@@ -5,10 +5,20 @@
         <link rel="stylesheet" type="text/css" href="HSG.css">
         <script src="iniciarBuscaminas.js"></script>
     </head>
-    <body>
-        <p align="center">Buscaminas ElBulgaro</p>
-        <div id="miDiv" class="miDiv">
-            
-        </div>
+    <body align="center">
+        <p>Buscaminas ElBulgaro</p>
+        ¿Cual sera el tamaño del tablero?<input id="tamañoTablero" type="number"><br>
+        ¿Cuantas bombas tendra este tablero?<input id="numBombas" type="number"><br>
+        ¿Cual sera el nivel del juego?<select id="dificultad">
+            <option value="Facil">Facil</option>
+            <option value="Normal" selected>Normal</option>
+            <option value="Dificil">Dificil</option>
+            <option value="miEleccion">Mi eleccion</option>
+        </select><br>
+        <button onclick="generarTableroJS()">Comenzar</button>
+
+        <br><br>
+
+        <div id="miDiv" align="center"></div>
     </body>
 </html>

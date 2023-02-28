@@ -1,5 +1,5 @@
-calcularNumMinas(x , y){
-
+function calcularNumMinas(x, y){
+    
 }
 
 function banderas(id){ //esta función se usa cuando el usuario pulsa el botón derecho en alguna celda de la tabla para poner o quitar banderas

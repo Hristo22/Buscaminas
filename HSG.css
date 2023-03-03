@@ -4,6 +4,11 @@
 	--size: 32px;
 }
 
+body {
+	background-image: url("Bandera.jpg");
+	background-size: 100%;
+}
+
 #miDiv {
 	padding: 10px;
 	display:grid;
@@ -19,10 +24,10 @@
 
 #miDiv div {
     background-color: #BBBBBB;
-	border-left: 2px solid #D3D3D3;
-	border-top: 2px solid #D3D3D3;
-	border-right: 2px solid #A9A9A9;
-	border-bottom: 2px solid #A9A9A9;
+	border-left: 2px solid #8ec3ee;
+	border-top: 2px solid #8ec3ee;
+	border-right: 2px solid #3ba1c9;
+	border-bottom: 2px solid #3ba1c9;
 	text-align: center;
 	line-height: var(--size);
 }

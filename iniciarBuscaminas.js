@@ -46,8 +46,7 @@ function dibujarTableroHTML(tamano) {
     document.querySelector("html").style.setProperty("--num-columnas",tamano);
 
     while(contenido.firstChild) {
-        //contenido.firstChild.removeEventListener("contextmenu",marcar);
-        //contenido.firstChild.removeEventListener("click",destapar);
+        contenido.firstChild.removeEventListener("contextmenu",marcar);
         contenido.removeChild(contenido.firstChild);
     }
 
@@ -59,8 +58,7 @@ function dibujarTableroHTML(tamano) {
             newDiv.setAttribute("class"," ");
             newDiv.dataset.fila = f;
             newDiv.dataset.columna = c;
-            //newDiv.addEventListener("contextmenu",marcar); //evento con el botón derecho del raton
-            //newDiv.addEventListener("click",destapar); //evento con el botón izquierdo del raton
+            newDiv.addEventListener("contextmenu",marcar); //evento con el botón derecho del raton
 
             contenido.appendChild(newDiv);
             
@@ -95,19 +93,52 @@ function clickar(id) {
     }
 };
 
-/*
-function banderas(id){ 
-    if(document.getElementById(id).outerText=="🚩"){
-        document.getElementById(id).innerText="";
-        numBombas++;
-        document.getElementById("numBanderas").innerText="Banderas restantes: "+numBombas;
-    }else if(numBombas>0){
-        document.getElementById(id).innerText="🚩";
-        numBombas--;
-        document.getElementById("numBanderas").innerText="Banderas restantes: "+numBombas;
+function marcar(miEvento){
+    if (miEvento.type === "contextmenu"){
+        console.log(miEvento);
+
+        //obtenemos el elemento que ha disparado el evento
+        let casilla = miEvento.currentTarget;
+
+        //detenemos el burbujeo del evento y su accion por defecto
+        miEvento.stopPropagation();
+        miEvento.preventDefault();
+
+        //obtenemos la fila de las propiedades dataset.
+        //como es un string hay que convertirlo a numero
+        let fila = parseInt(casilla.dataset.fila,10);
+        let columna = parseInt(casilla.dataset.columna,10);
+
+        if (fila>=0 && columna>=0 && fila< tamano && columna < tamano) {
+            //si esta marcada como "bandera"
+            if (casilla.classList.contains("icon-bandera")){
+                //la quitamos
+                casilla.classList.remove("icon-bandera");
+                //y la marcamos como duda
+                casilla.classList.add("icon-duda");
+                //y al numero de minas encontradas le restamos 1
+                numBombas++;
+            } else if (casilla.classList.contains("icon-duda")){
+                //si estaba marcada como duda lo quitamos
+                casilla.classList.remove("icon-duda");
+            } else if (casilla.classList.length == 0){
+                //si no está marcada la marcamos como "bandera"
+                casilla.classList.add("icon-bandera");
+                //y sumamos 1 al numero de minas encontradas
+                numBombas--;
+                /*
+                //si es igual al numero de minas totales resolvemos el tablero para ver si esta bien
+                if (numMinasEncontradas == numMinasTotales){
+                    resolverTablero(true);
+                }
+                */
+            }
+
+            actualizarNumMinasRestantes();
+        }
+
     }
 }
-*/
 
 function actualizarNumMinasRestantes(){
     document.querySelector("#numMinasRestantes").innerHTML = numBombas;

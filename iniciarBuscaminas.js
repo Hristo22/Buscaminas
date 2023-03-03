@@ -3,18 +3,16 @@ let miTabla;
 let filas;
 let columnas;
 let casilla;
-let bomba="💣";
 let dificultad;
 let numBombas;
+let newDiv;
+let contenido;
 
 function generarTableroJS() {
     //tamano=document.getElementById("tamañoTablero").value;
-    miTabla=document.createElement("table");
+    //miTabla=document.createElement("table");
+    
     dificultad=document.getElementById("dificultad").value;
-
-    if(document.getElementById("boton").click==true) {
-        location.reload();
-    }
 
     if(dificultad=="Facil") {
         tamano=3;
@@ -37,29 +35,38 @@ function generarTableroJS() {
 
     colocarBombasTableroJS(numBombas);
 
-    let contenido=document.getElementById("miDiv");
-    contenido.appendChild(miTabla);
+    actualizarNumMinasRestantes();
 };
 
 function dibujarTableroHTML(tamano) {
-    for(let i=0; i<tamano; i++) {
-        filas=document.createElement("tr");
-        for(let j=0; j<tamano; j++) {
-            crearCasillero(filas,i,j);
+    contenido=document.getElementById("miDiv");
+
+    //actualizamos las variables CSS con las variables JavaScript
+    document.querySelector("html").style.setProperty("--num-filas",tamano);
+    document.querySelector("html").style.setProperty("--num-columnas",tamano);
+
+    while(contenido.firstChild) {
+        //contenido.firstChild.removeEventListener("contextmenu",marcar);
+        //contenido.firstChild.removeEventListener("click",destapar);
+        contenido.removeChild(contenido.firstChild);
+    }
+
+    for(let f=0; f<tamano; f++) {
+        for(let c=0; c<tamano; c++) {
+            newDiv = document.createElement("div");
+            newDiv.setAttribute("id","f" + f + "_c" + c );
+            newDiv.setAttribute("onclick","clickar(id)");
+            newDiv.setAttribute("class"," ");
+            newDiv.dataset.fila = f;
+            newDiv.dataset.columna = c;
+            //newDiv.addEventListener("contextmenu",marcar); //evento con el botón derecho del raton
+            //newDiv.addEventListener("click",destapar); //evento con el botón izquierdo del raton
+
+            contenido.appendChild(newDiv);
+            
         }
-        miTabla.appendChild(filas);
     }
 }
-
-function crearCasillero(filas, i, j) {
-    casilla=document.createElement("td");
-    casilla.setAttribute("id",`idCelda_${i}_${j}`);
-    casilla.setAttribute("class","colorCeldas");
-    //casilla.setAttribute("id",10*i+j);
-    casilla.setAttribute("onclick","clickar(id)");
-    casilla.setAttribute("value"," ");
-    filas.appendChild(casilla);
-};
 
 function numeroAleatorio() {
     let num=Math.floor(Math.random() * tamano);
@@ -67,25 +74,28 @@ function numeroAleatorio() {
 };
 
 function colocarBombasTableroJS(numBombas) {
-    let i=numeroAleatorio();
-    let j=numeroAleatorio();
     //numBombas=document.getElementById("numBombas").value;
 
     for(let a=0; a<numBombas; a++) {
-        if(document.getElementById(`idCelda_${i}_${j}`)==" ") {
-            document.getElementById(`idCelda_${i}_${j}`).value=bomba;
+        let i=numeroAleatorio();
+        let j=numeroAleatorio();
+
+        if(document.getElementById(`f${i}_c${j}`).className==" ") {
+            document.getElementById(`f${i}_c${j}`).innerHTML="";
+            document.getElementById(`f${i}_c${j}`).classList="icon-bomba";
         }
     };
 };
 
 function clickar(id) {
-    if(document.getElementById(id).value==bomba) {
-        alert("Has tocado una bomba 💣");
+    if(id.classList=="icon-bomba") {
+        console.log("Has tocado una bomba 💣");
     } else {
         alert(id);
     }
 };
 
+/*
 function banderas(id){ 
     if(document.getElementById(id).outerText=="🚩"){
         document.getElementById(id).innerText="";
@@ -96,4 +106,9 @@ function banderas(id){
         numBombas--;
         document.getElementById("numBanderas").innerText="Banderas restantes: "+numBombas;
     }
+}
+*/
+
+function actualizarNumMinasRestantes(){
+    document.querySelector("#numMinasRestantes").innerHTML = numBombas;
 }
